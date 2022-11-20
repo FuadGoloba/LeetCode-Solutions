@@ -15,6 +15,7 @@ def subsets(nums):
     
     '''
         Idea is to use a decision tree such that for each element in the array, we create a subset including the element and we create a susbet to not include 
+        Time = O(n.2n), 
     '''
     # In the array nums, at every step we have two choices for each element either we can ignore the element or we can include the element in our subset
     res = [] # Array to store all subsets
