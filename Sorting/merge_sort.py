@@ -85,8 +85,5 @@ def merge2(left, right):
     return res
 
 if __name__ == '__main__':
-
-    input_n = int(input('Enter size of array:' ))
-    input_arr = list(map(int, input('Enter elements of the array with a space between each :' ).split()))
-    assert len(input_arr) == input_n
-    print(merge_sort(input_arr))
+    for nums in [[12, 11, 13, 5, 6], [1,2,4,3,1], [1,2,3], [1], [7,3,7]]:
+        print(insertion_sort(nums))
