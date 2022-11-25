@@ -12,7 +12,7 @@ def merge_sort(arr):
 
     # Base case; 
 
-    if len(arr) == 1:
+    if len(arr) <= 1:
         return arr
 
     # Split array into halves
@@ -86,4 +86,4 @@ def merge2(left, right):
 
 if __name__ == '__main__':
     for nums in [[12, 11, 13, 5, 6], [1,2,4,3,1], [1,2,3], [1], [7,3,7]]:
-        print(insertion_sort(nums))
+        print(merge_sort(nums))
