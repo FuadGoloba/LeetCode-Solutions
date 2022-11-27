@@ -39,10 +39,10 @@ def is_palindrome2(s):
     right_pointer = len(s) - 1 #Initialising a right pointer
     
     while (left_pointer < right_pointer): # Ensure that while comparing the left and right pointers, the left and right don't exceed one another
-        while left_pointer < right_pointer and not is_alphanum(s[left_pointer]): # we want to skip to the next lkeft pointer if the left pointer contains non alphanumeric characters
+        while left_pointer < right_pointer and not isAlphaNum(s[left_pointer]): # we want to skip to the next lkeft pointer if the left pointer contains non alphanumeric characters
             left_pointer += 1
             
-        while right_pointer > left_pointer and not is_alphanum(s[right_pointer]): # we want to skip to the next right pointer if the right pointer contains non alphanumeric characters
+        while right_pointer > left_pointer and not isAlphaNum(s[right_pointer]): # we want to skip to the next right pointer if the right pointer contains non alphanumeric characters
             right_pointer -= 1
             
         if s[left_pointer].lower() != s[right_pointer].lower(): # Check if the left and right pointer characters are palindromic

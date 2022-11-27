@@ -20,7 +20,7 @@ def maxArea1(height):
     
     # Traverse the array; calculating the area of each element across the next elements in the array and updating the result with the maximum area
     for left in range(len(height)):
-        for right in range(i + 1, len(height)):
+        for right in range(left + 1, len(height)):
             area = (right - left) * min(height[left], height[right]) # The area is the width of the container (x-axis) multiplied by the minimum height. (i.e the height that can hold water without pouring)
             result = max(area, result)
     return result
