@@ -53,7 +53,7 @@ def firstBadVersion2(n):
     return low
 
 
-# API that returns whether a version is vad
+# API that returns whether a version is bad (comes with the question)
 def isBadVersion(version):
     return version == bad
 
