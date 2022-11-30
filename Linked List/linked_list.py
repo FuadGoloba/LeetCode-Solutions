@@ -2,7 +2,7 @@
 
 class Node:
     '''
-    Creating a Node class that takes in a attrributes;
+    Creating a Node class that takes in attrributes;
     val = Anv value of str, int type
     next = pointer or reference to another node (i.e the pointer of one node refers to memory location of another node, Hence linkedlist)
     '''
@@ -26,7 +26,7 @@ class LinkedList:
     def pre_insert(self, val):
         # Takes in val - value to be entered in the linkedlist
         
-        # To insert val into the linkedlist, we create a node of the val and make its pointer refer to the head of the LL which would have been N
+        # To insert val into the linkedlist, we create a node of the val and make its pointer refer to None
         node = Node(val, self.head) # Create a node to be inserted at the top of the LL, the pointer of this node will point to the head of the LL
         self.head = node # Then update the node as the new head of the linkedlist
         
