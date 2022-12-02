@@ -30,7 +30,7 @@ class TreeNode:
             p = p.parent # update the parent to the next parent
         return level # return the level count
     
-    # Method to print tree
+    # Method to print tree 
     def print_tree(self):
         spaces = ' ' * self.get_level() * 3
         prefix = spaces + '|--' if self.parent else ''
