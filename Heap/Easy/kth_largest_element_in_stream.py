@@ -58,7 +58,7 @@ class KthLargest:
         while len(self.minHeap) > self.k:
             heapq.heappop(self.minHeap)
     
-    # Method to push a value to the stream 
+    # Method to push a value to the stream O(logn)
     def add(self, val):
         # Adding a new value to the stream
         heapq.heappush(self.minHeap, val)
