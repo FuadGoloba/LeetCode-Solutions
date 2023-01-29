@@ -1,4 +1,4 @@
-# Implementing a hashmap
+# Implementing a hashmap/ HashTable
 
 class Pair:
     '''
