@@ -4,7 +4,7 @@
 # Note that a single path only move along 0s and can't visit the same cell more than once. So 1 represents block and 0 represents a pass.
 
 
-def hasPathsDFS(grid, row_pointer, col_pointer, visited):
+def findPathsDFS(grid, row_pointer, col_pointer, visited):
     '''
         Using DFS (backtracking); Time complexity -> O(m * n) cause we brute-force by going through all possible coordinates that can lead to a path
                    Space complexity -> 0(m * n)
@@ -38,10 +38,10 @@ def hasPathsDFS(grid, row_pointer, col_pointer, visited):
     count = 0
     
     # Recursively traverse all possible cooordinates from the present location (i.e up, down, left, right)
-    count += hasPathsDFS(grid, row_pointer - 1, col_pointer, visited)
-    count += hasPathsDFS(grid, row_pointer + 1, col_pointer, visited)
-    count += hasPathsDFS(grid, row_pointer, col_pointer - 1, visited)
-    count += hasPathsDFS(grid, row_pointer, col_pointer + 1, visited)
+    count += findPathsDFS(grid, row_pointer - 1, col_pointer, visited)
+    count += findPathsDFS(grid, row_pointer + 1, col_pointer, visited)
+    count += findPathsDFS(grid, row_pointer, col_pointer - 1, visited)
+    count += findPathsDFS(grid, row_pointer, col_pointer + 1, visited)
     
     # Once we get to the destination, we backtrack (now starting from the destination to the source) to find if alternative paths could have led to the destination
     # So we remove coordinated that have been visited in order to backtrack
@@ -55,5 +55,5 @@ if __name__ == '__main__':
               [0,1,0,0]]
     visited = set()
 
-    print(hasPathsDFS(matrix, 0, 0, visited))
+    print(findPathsDFS(matrix, 0, 0, visited))
     
