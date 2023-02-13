@@ -8,6 +8,8 @@ def hasPathsDFS(grid, row_pointer, col_pointer, visited):
     '''
         Using DFS (backtracking); Time complexity -> O(m * n) cause we brute-force by going through all possible coordinates that can lead to a path
                    Space complexity -> 0(m * n)
+        
+        Idea is to find the initial uniique path by going through all possible coordinates possible(available) till we get to the destination, and then backtrack to find another potential unique path
     '''
     # Get the length of the rows and cols in the matrix 
     row_len, col_len = len(grid), len(grid[0])
