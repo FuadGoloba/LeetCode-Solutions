@@ -1,7 +1,7 @@
 # Count the unique paths from source to destination. 
 
 # Given a grid/matrix, count the unique paths from the top left to the bottom right.
-# Note that a single path only move along 0s and can't visit the same cell more than once. So 1 represents block and 0 represents a pass.
+# Note that a single path only move along 0s and can't visit the same cell more than once. So 1 represents block and 0 represents a pass
 
 
 def findPathsDFS(grid, row_pointer, col_pointer, visited):
