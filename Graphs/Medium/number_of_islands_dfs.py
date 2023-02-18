@@ -11,7 +11,7 @@ import collections
 
 def numIslands(grid):
     """
-        Using a breadth first search traversal algorithm; Time - O(m * n); Space: O(m * n)
+        Using a depth first search traversal algorithm; Time - O(m * n); Space: O(m * n)
     """    
     # Get the length of the rows and columns in the matrix
     row_len, col_len = len(grid), len(grid[0])
@@ -42,7 +42,7 @@ def numIslands(grid):
         for r, c in directions:
             adj_row_ptr = row_ptr + r 
             adj_col_ptr = col_ptr + c
-            dfs_isIsland(adj_row_ptr, adj_col_ptr)
+            dfs_isIsland(adj_row_ptr, adj_col_ptr) # Recurse on the adjacent/neighbour to traverse their neighbours to check if they are part of the connected island
             
     # Traversing the entire grid to find connected islands
     # Note: AN island is a connection of adjacents lands horizontally or vertically

@@ -21,7 +21,7 @@ def numIslands(grid):
     visited = set() # Set to keep track of visited coordinates
     num_of_islands = 0 # Counter for number of islands
     
-    # Creating a bfs algorithm to traverse lands to find an island
+    # Creating a bfs algorithm to traverse connected lands to find an island
     def bfs_isIsland(row_ptr, col_ptr):
         """
             A BFS traversal algorithm to traverse adjacent cells (lands) and check if its part of a connected Island
