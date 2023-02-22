@@ -6,8 +6,8 @@
 
 def findPathsDFS(grid, row_pointer, col_pointer, visited):
     '''
-        Using DFS (backtracking); Time complexity -> O(m * n) cause we brute-force by going through all possible coordinates that can lead to a path
-                   Space complexity -> 0(m * n)
+        Using DFS (backtracking); Time complexity -> O(4^(n*m)) cause we brute-force by going through all possible coordinates that can lead to a path
+                   Space complexity -> 0(n*m)
         
         Idea is to find the initial uniique path by going through all possible coordinates possible(available) till we get to the destination, and then backtrack to find another potential unique path
     '''

@@ -11,7 +11,7 @@ import collections
 
 def numIslands(grid):
     """
-        Using a depth first search traversal algorithm; Time - O(m * n); Space: O(m * n)
+        Using a depth first search traversal algorithm; Time - O(4^(n*m)); Space: O(n*m)
     """    
     # Get the length of the rows and columns in the matrix
     row_len, col_len = len(grid), len(grid[0])
