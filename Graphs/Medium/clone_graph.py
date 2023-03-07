@@ -45,6 +45,7 @@ def cloneGraphDFS(node):
     
     return clone_node(node) if node else None
 
+
 # BFS technique to clone a node
 def cloneGraphBFS(node):
     '''
@@ -52,14 +53,14 @@ def cloneGraphBFS(node):
     '''
     from collections import deque
     origToClone = {} # Hashmap mapping nodes to their clone to keep track of cloned nodes
-    queue = deque # QUeue to traverse neighbor nodes
+    queue = deque() # QUeue to traverse neighbor nodes
     
     # Should a node not exist
     if not node:
         return None
     
     cloned =  Node(node.val) # Create a clone of the first node
-    queue.append(node) # add the first node to the queue
+    queue.append(node) # add the first/source node to the queue
     origToClone[node] = cloned # Add the cloned node to the hashmap
     
     # Traversing the queue of neighbor nodes
@@ -71,11 +72,34 @@ def cloneGraphBFS(node):
                 queue.append(neighbor) # add to the queue to traverse its neighbors next
                 cloned = Node(neighbor.val) # clone the current neighbor
                 origToClone[neighbor] = cloned # add the cloned neighbor to the hashmap
-            origToClone[curr].neighbours.append(origToClone[neighbor]) # add the cloned neighbour to the current nodes' list of neighbors
+            origToClone[curr].neighbors.append(origToClone[neighbor]) # add the cloned neighbour to the current nodes' list of neighbors
     
-    
+    # return the address of the cloned source node
     return origToClone[node]        
     
+# Build Graph object
+def buildGraph():
+    """
+    Given Graph:
+    1--2
+    |  | 
+    4--3
+    """
+    node1 = Node(1)
+    node2 = Node(2)
+    node3 = Node(3)
+    node4 = Node(4)
     
+    node1.neighbors = [node2, node4]
+    node2.neighbors = [node1, node3]
+    node3.neighbors = [node2, node4]
+    node4.neighbors = [node1, node3]
+    
+    return node1
+
+if __name__ == '__main__':
+    srcNode = buildGraph()
+    print(cloneGraphBFS(srcNode))
+    print(cloneGraphDFS(srcNode))
     
 
