@@ -42,9 +42,28 @@ def fib_dp(n):
         dp[0] = temp
         i += 1
     return dp[1]
+
+
+def fib_dp2(n):
+    '''
+        Dynamic Programming Technique (bottom up approach without using an array)
+    '''
+    
+    if n < 2:
+        return n
+    
+    prev, curr = 0, 1
+    
+    for i in range(2, n + 1):
+        temp = curr
+        curr = curr + prev # Update current
+        prev = temp
+    
+    return curr
     
 
 if __name__ == '__main__':
     print(fib_brute_force(10))
     print(fib_memoization(10, {}))
     print(fib_dp(10))
+    print(fib_dp2(10))
