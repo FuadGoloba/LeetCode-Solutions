@@ -1,7 +1,9 @@
-# Count Paths
+# Count Unique Paths - Medium
 
 # Count the number of paths from the top left to the bottom right. You are only allowed to move down or to the right.
-# Given a m x n grid, Count the number of paths from the top left corner to the bottom right corner moving only down or to the right
+# There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). 
+# The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+# Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
 
 # Example:
 # Input: m = 4, n = 4
@@ -10,6 +12,10 @@
 # Example 2:
 # Input: m = 3, n = 2
 # Output: 3
+
+# Example 3:
+# Input: m = 3, n = 7
+# Output: 28
 
 # Solution: This problem can be solved Recursively (Top Down), using Memoization(Top Down Approach), and also using Dynamic Programming Techniques(Bottom Up approach). This is th eorder from least efiicient to very efficient
 #     : The sum of paths from a given cell/coordinate is computed as sum of (count of paths from the cell below it and count of paths from the cell above it)
@@ -21,7 +27,7 @@ class Grid:
         self.cols = cols
     
     # Method to compute the sum of paths recursively - Time: O(2 ^ (n + m)), Space: O(n + m)
-    def CountPathDFS(self):
+    def CountUniquePathDFS(self):
         curr_row, curr_col = 0, 0
         # Recursive function to traverse the grid counting all parts when we move down and when we move right
         def DFS(curr_row, curr_col):
@@ -38,7 +44,7 @@ class Grid:
     
     
     # Method to compute the sume of paths using Memoization - Time and Space: O(n * m)
-    def CountPathMemoization(self): 
+    def CountUniquePathMemoization(self): 
         curr_row, curr_col, cache = 0, 0, dict()
         
         def DFSCache(curr_row, curr_col, cache):
@@ -58,7 +64,7 @@ class Grid:
     
     
     # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(m), where m is num of cols
-    def CountPathDP(self):
+    def CountUniquePathDP(self):
         '''
             Unlike the Top Down Approach, we start from the bottom and work our way up. Here we save more space than the memoization method as DP wouldn't need the entire grid to calculate values at a given row
             Since to calculate count of paths for cells in a particular row, we only need its bottom row. e.g grid[rows 2] will need grid[rows 3] and then we update the bottomm row to become the current row
@@ -78,9 +84,9 @@ class Grid:
         
 
 if __name__ == '__main__':
-    grid = Grid(3, 2)
+    grid = Grid(3, 7)
     
-    print(grid.CountPathDFS())
-    print(grid.CountPathMemoization())
-    print(grid.CountPathDP())
+    print(grid.CountUniquePathDFS())
+    print(grid.CountUniquePathMemoization())
+    print(grid.CountUniquePathDP())
         
