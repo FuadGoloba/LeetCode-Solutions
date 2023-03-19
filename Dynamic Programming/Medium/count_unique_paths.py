@@ -26,7 +26,7 @@ class Grid:
         self.rows = rows
         self.cols = cols
     
-    # Method to compute the sum of paths recursively - Time: O(2 ^ (n + m)), Space: O(n + m)
+    # Method to compute the sum of paths recursively - Time: O(2 ^ (n * m)), Space: O(n  m)
     def CountUniquePathDFS(self):
         curr_row, curr_col = 0, 0
         # Recursive function to traverse the grid counting all parts when we move down and when we move right
@@ -63,7 +63,7 @@ class Grid:
         return DFSCache(curr_row, curr_col, cache)
     
     
-    # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(m), where m is num of cols
+    # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(2 * m)== O(m), where m is num of cols
     def CountUniquePathDP(self):
         '''
             Unlike the Top Down Approach, we start from the bottom and work our way up. Here we save more space than the memoization method as DP wouldn't need the entire grid to calculate values at a given row
