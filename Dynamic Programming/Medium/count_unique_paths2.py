@@ -53,11 +53,13 @@ class Grid:
                 return cache[(curr_row_idx, curr_col_idx)]
             if curr_row_idx == nrows - 1 and curr_col_idx == ncols - 1:
                 return 1
-            return (DFSCache(curr_row_idx + 1, curr_col_idx, nrows, ncols, cache) + DFSCache(curr_row_idx, curr_col_idx + 1, nrows, ncols, cache))
-        
+            cache[(curr_row_idx, curr_col_idx)] = (DFSCache(curr_row_idx + 1, curr_col_idx, nrows, ncols, cache) + DFSCache(curr_row_idx, curr_col_idx + 1, nrows, ncols, cache))
+
+            return cache[(curr_row_idx, curr_col_idx)]
+            
         return DFSCache(curr_row_idx, curr_col_idx, nrows, ncols, cache)
     
-    # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(2 * m)== O(m), where m is num of cols
+    # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(2 * (m+1))== O(m), where m is num of cols
     def countUniquePathsWithObstaclesDP(self):
         '''
             Unlike the Top Down Approach, we start from the bottom and work our way up. Here we save more space than the memoization method as DP wouldn't need the entire grid to calculate values at a given row
@@ -78,6 +80,24 @@ class Grid:
                     current_row[col_idx] = current_row[col_idx + 1] + bottom_row[col_idx]
             bottom_row = current_row
         return bottom_row[0]
+    
+    # Method to compute sum of paths using Dynamic Programming - Time: O(n * m), Space: O(1 * m)== O(m), where m is num of cols
+    def countUniquePathsWithObstaclesDP2(self):
+        '''
+            Similar to the Bottom up apporach above except that, instead of creating 2 dp rows (bottom and current) for the computation, we use just one row and 
+            do the computation in-place. (i.e current row cell being calculated will overwrite the bottom row value for that cell)
+        '''
+        nrows, ncols = len(self.obstacleGrid), len(self.obstacleGrid[0])
+        dp_row = [0] * ncols # Create a dp row for computation in-place
+        dp_row[ncols - 1] = 1
+        
+        for row_idx in reversed(range(nrows)):
+            for col_idx in reversed(range(ncols)):
+                if self.obstacleGrid[row_idx][col_idx] == 1:
+                    dp_row[col_idx] = 0
+                elif col_idx + 1 < ncols: # Should the right direction be within bound
+                    dp_row[col_idx] = dp_row[col_idx + 1] + dp_row[col_idx]
+        return dp_row[0]
                     
     
 if __name__ == '__main__':
@@ -93,3 +113,4 @@ if __name__ == '__main__':
     print(grid.countUniquePathsWithObstacles())
     print(grid.countUniquePathsWithObstaclesMemoization())
     print(grid.countUniquePathsWithObstaclesDP())
+    print(grid.countUniquePathsWithObstaclesDP2())
