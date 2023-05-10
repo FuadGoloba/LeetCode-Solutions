@@ -25,7 +25,7 @@
 
 def threeSum1(nums):
     '''
-        Using the 2sum solution and an extra array ; Time = O(n2), Memory = O(n)
+        Using the 2sum solution and an extra array ; Time = O(n2logn), Memory = O(n)
     '''
     result = [] # create a result list to store all triplets
 
@@ -45,6 +45,8 @@ def threeSum1(nums):
                 # Check that inner list only contains three sum and the result list contains no duplicates
                 if inner_list not in result:
                     result.append(inner_list)
+                # OR 
+                # result.append(sorted([nums[i], nums[j], remainder])) if sorted([nums[i], nums[j], remainder]) not in result else None
             else:
                 hashset.add(nums[j])
     return result
