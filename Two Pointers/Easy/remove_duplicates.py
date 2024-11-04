@@ -26,6 +26,8 @@
 
 def removeDuplicates(nums: list[int]) -> int:
     """Remove Duplicates from Sorted Array using while loop
+    
+    Time Complexity - O(n)
 
     Args:
         nums (list[int]): integer array sorted in ascending order
