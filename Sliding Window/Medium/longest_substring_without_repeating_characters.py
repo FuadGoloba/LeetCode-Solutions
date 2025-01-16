@@ -37,7 +37,7 @@ def lengthOfLongestSubstring(s):
             seen.remove(s[left])
             left += 1
         seen.add(s[right])
-        max_len = max(max_len, len(seen)) # Update the maxiumum length of substring
+        max_len = max(max_len, (right - left) + 1) # Update the maxiumum length of substring
         
     return max_len
 
@@ -67,3 +67,4 @@ def lengthOfLongestSubstring2(s: str) -> int:
 if __name__ == '__main__':
     for s in ["abcabcbb", "bbbbb", "pwwkew"]:
         print(lengthOfLongestSubstring(s))
+        assert(lengthOfLongestSubstring(s) == lengthOfLongestSubstring2(s))
