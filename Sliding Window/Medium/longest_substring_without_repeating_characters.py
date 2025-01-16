@@ -17,6 +17,10 @@
     Output: 3
     Explanation: The answer is "wke", with the length of 3.
     Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+    
+    Constraints:
+    0 <= s.length <= 5 * 104
+    s consists of English letters, digits, symbols and spaces.
 """
 
 def lengthOfLongestSubstring(s):
@@ -64,7 +68,50 @@ def lengthOfLongestSubstring2(s: str) -> int:
             l += 1
     return max_length
 
+def lengthOfLongestSubstring3(s: str) -> int:
+    """
+        Using a Sliding Window and a hashmap to keep track of duplicates characters and their count; Time = O(n), Memory = o(n)
+        
+        SOLUTION:
+            The intuition follows similar to using a hashset except that you use a hashmap to store the characters and their counts. Deduct the count when a repeated character is encountered.
+    """
+    
+    map = {}
+    max_len = 0
+    left = 0
+    
+    for right, char in enumerate(s):
+        map[char] = map.get(char, 0) + 1 # similar to hashset.add()
+        while map[char] > 1:
+            map[s[left]] -= 1 # similar to hashset.remove()
+            left += 1
+        max_len = max(max_len, (right - left) + 1)
+
+    return max_len
+
+def lengthOfLongestSubstring4(s: str) -> int:
+    """
+        Using a Sliding Window and a fixed array with size (128) of all english letters, digits, symbols and spaces; to keep track of character count whereby the ascii number of the character represents the index.
+        ; Time = O(n), Memory = o(n) ; Most efficient method
+        
+        SOLUTION:
+            The intuition follows similar to using a hashset/hashmap except that you use an array of fixed size to store the character counts. Deduct the count when a repeated character is encountered.
+    """
+    max_len = 0
+    left = 0
+    char_arr = [0] * 128
+    
+    for right in range(len(s)):
+        char = ord(s[right])
+        while char_arr[char] > 0:
+            char_arr[ord(s[left])] -= 1
+            left += 1
+        char_arr[char] += 1
+        max_len = max(max_len, (right - left) + 1)
+
+    return max_len
+        
 if __name__ == '__main__':
     for s in ["abcabcbb", "bbbbb", "pwwkew"]:
         print(lengthOfLongestSubstring(s))
-        assert(lengthOfLongestSubstring(s) == lengthOfLongestSubstring2(s))
+        assert(lengthOfLongestSubstring(s) == lengthOfLongestSubstring2(s) == lengthOfLongestSubstring3(s) == lengthOfLongestSubstring4(s))
