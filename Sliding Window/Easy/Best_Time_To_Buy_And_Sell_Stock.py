@@ -51,8 +51,27 @@ def maxProfit2(prices):
         
     return max_profit
 
+def maxProfit3(prices):
+    '''
+        Using Dynamic Programming approach = Time - O(n), Memory - O(1)
+        
+        SOLUTION:
+            The intuition is to initialise a min_price variable to keep track of lowest pric seen so far and update as we come across a much lower price.
+            We calculate potential profit by subtracting min_price from the current price. Then update the max_profit if the new profit is higher than the current max_profit
+    '''
+    
+    min_price = float('inf')
+    max_profit = 0
+    
+    for current_price in prices:
+        min_price = min(min_price, current_price)
+        max_profit = max(max_profit, current_price - min_price)
+        
+    return max_profit
+    
+
 if __name__ == '__main__':
     for input_n in [[7,1,5,3,6,4], [7,6,4,3,1], [7,1,5,3,6,4,10]]:
         print(maxProfit2(input_n))
-    
+        assert maxProfit2(input_n) == maxProfit3(input_n)
     
