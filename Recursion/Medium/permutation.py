@@ -73,7 +73,6 @@ def permute(nums: list[int]) -> list[list[int]]:
             Final Result:
                 [[1,2,3], [2,1,3], [2,3,1], [1,3,2], [3,1,2], [3,2,1]]    
     """
-    
     # Base case
     if len(nums) == 0:
         return [[]]
@@ -94,21 +93,77 @@ def permute1(nums):
     
     '''
         Using Backtracking Recursion approach to divide the problem into sub problems and permute each sub problem till we reach a base case 
-        - Base case - an array of 1 item would return itself (i.e permute([1]) will return [[1]] )
-        - if not base case we want to divide the problem into subproblems by looping through the array and popping the first item and recuresively permuting the rest of the array
-            till we get to the base case, and then work our way back up to the main problem by including the popped item to the permutation result of the sub problems
-        - 
         Time = O(n), Memory = O(n)
+        
+        SOLUTION:
+            The intuition is to remove the first element (pop(0)) in each recursive call, finds permutations of the smaller list, and then appends the removed element back at the end before continuing.
+            Steps:
+                1. Base Case
+                    - If there is only one element left, return it as the only possible permutation. e.g permute([3]) returns [[3]]
+                    - The slice nums[:] ensures we return a copy instead of modifying the original list.
+                    
+                2. Recursive Case
+                    - Remove the first element (popped = nums.pop(0)).
+                    - Find permutations of the smaller list (self.permute(nums)).
+                    - Append the removed element (popped) to each permutation.
+                    - Restore the original list order by adding popped back to the end (nums.append(popped)) after processing.
+
+            Example nums = [1,2,3]
+                Step 1: First Call
+                    nums = [1, 2, 3]
+                    Remove 1: popped = 1, nums = [2, 3]
+                    Call permute([2, 3])
+                Step 2: Recursive Call on [2, 3]
+                    nums = [2, 3]
+                    Remove 2: popped = 2, nums = [3]
+                    Call permute([3])
+                Step 3: Recursive Call on [3] (Base Case)
+                    nums = [3]
+                    Since len(nums) == 1, return [[3]].
+                Step 4: Returning to [2, 3]
+                    We have [[3]] from permute([3])
+                    Insert popped = 2 into each permutation:
+                        Append 2 to [3] → [3, 2]
+                    Now all_permutations = [[3, 2]]
+                    Restore nums = [3, 2] by appending 2 back.
+                    Second iteration in loop (pop(0) again):
+                        Remove 3: popped = 3, nums = [2]
+                        Call permute([2]), which returns [[2]]
+                        Insert 3 into [2] → [2, 3]
+                        all_permutations = [[3, 2], [2, 3]]
+                        Restore nums = [2, 3].
+                Step 5: Returning to [1, 2, 3]
+                    permute([2, 3]) returned [[3, 2], [2, 3]]
+                    Insert popped = 1 into each permutation:
+                        [3, 2] → [3, 2, 1]
+                        [2, 3] → [2, 3, 1]
+                    all_permutations = [[3, 2, 1], [2, 3, 1]]
+                    Restore nums = [2, 3, 1].
+                    Next loop iteration (pop(0) again):
+                        Remove 2: popped = 2, nums = [3, 1]
+                        Call permute([3, 1]), which will generate [[3, 1], [1, 3]]
+                        Insert 2 into each:
+                            [3, 1] → [3, 1, 2]
+                            [1, 3] → [1, 3, 2]
+                        all_permutations += [[3, 1, 2], [1, 3, 2]]
+                        Restore nums = [3, 1, 2].
+                    Final iteration (pop(0) one last time):
+                        Remove 3: popped = 3, nums = [1, 2]
+                        Call permute([1, 2]), which generates [[1, 2], [2, 1]]
+                        Insert 3 into each:
+                            [1, 2] → [1, 2, 3]
+                            [2, 1] → [2, 1, 3]
+                        all_permutations += [[1, 2, 3], [2, 1, 3]]
+                        Restore nums = [1, 2, 3].
     '''
-    
-    res = [] # Initialise an array to store the result
+    all_permutations = [] # Initialise an array to store the result
     
     # base case - an array of 1 item would return itself (i.e permute([1]) will return [[1]] )
     if len(nums) == 1:
         return [nums[:]] # Return a deep copy of the array so we don't affect the original array
     
     # Dividing the problem into subproblems 
-    for i in range(len(nums)): # Loop through the array popping the first item and recursively permuting the rest of the array (e.g [1,2,3] will be divided into sub problems [2,3], [3, 1], [1, 2])
+    for _ in range(len(nums)): # Loop through the array popping the first item and recursively permuting the rest of the array (e.g [1,2,3] will be divided into sub problems [2,3], [3, 1], [1, 2])
         popped = nums.pop(0)
         permutations = permute(nums) # (e.g sub problem [2, 3] will also reduce to sub problems [3], and [2] where we we have reached our base case and sub[3] will return [[3]] as the result of the permutation of [3], and sub[2] returns [[2]])
         
@@ -117,14 +172,14 @@ def permute1(nums):
         for perm in permutations:
             perm.append(popped)
             
-        res.extend(permutations) # including all permutation results of sub problems to the final result
+        all_permutations.extend(permutations) # including all permutation results of sub problems to the final result
             
         # We also want to append the popped item back to the original array and continue our loop till we have permuted the entire main problem
                 # (e.g for our sub problem [2,3], which we first removed the first item reducing the array to [3], now we append the removed item back to the original array i.e [3,2] so our initial loop can continue by removing first item - 3 and permuting [2] to return [[2]] 
                     # and then appending back to return permutation result [[2, 3]] which is the 2nd permutation result of subproblem [2, 3])
         nums.append(popped)
         
-    return res # Return the final result
+    return all_permutations # Return the final result
 
 if __name__ == '__main__':
     import math
