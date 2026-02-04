@@ -20,9 +20,23 @@
 
 
 def is_palindrome1(s):
-    '''
-        Reversing the string method
-    '''
+    """
+    Checks if a string is a valid palindrome using the reversing method.
+    
+    Intuition:
+        - Filter out non-alphanumeric characters and convert all letters to lowercase.
+        - Compare the cleaned string to its reverse to determine if it is a palindrome.
+    
+    Steps:
+        1. Initialize an empty string to store only alphanumeric characters.
+        2. Iterate through each character in the input string:
+            - If the character is alphanumeric, convert it to lowercase and append to the new string.
+        3. Compare the new string to its reverse.
+        4. Return True if they are equal, False otherwise.
+    
+    Time Complexity: O(n), where n is the length of the input string.
+    Space Complexity: O(n), for the filtered string.
+    """
     new_s = "" # Create a new string to store only alphanumeric characters of the input
     
     for char in s:
@@ -32,9 +46,27 @@ def is_palindrome1(s):
     
 
 def is_palindrome2(s):
-    '''
-        Using Two pointers; Time = O(n), Memory = O(1)
-    '''
+    """
+    Checks if a string is a valid palindrome using the two pointers method.
+    
+    Intuition:
+        - Use two pointers starting from both ends of the string.
+        - Skip non-alphanumeric characters and compare the characters at each pointer in a case-insensitive manner.
+        - Move pointers towards the center and repeat until they meet or cross.
+    
+    Steps:
+        1. Initialize left and right pointers at the start and end of the string.
+        2. While left < right:
+            - Move left pointer forward if not alphanumeric.
+            - Move right pointer backward if not alphanumeric.
+            - Compare lowercase characters at left and right pointers.
+            - If not equal, return False.
+            - Otherwise, move both pointers inward.
+        3. Return True if all characters matched.
+    
+    Time Complexity: O(n), where n is the length of the input string.
+    Space Complexity: O(1), constant extra space.
+    """
     left_pointer = 0 # Initialising a left pointer
     right_pointer = len(s) - 1 #Initialising a right pointer
     
@@ -62,5 +94,4 @@ def isAlphaNum(char):
 if __name__ == '__main__':
     for s in [ "race a car", "A man, a plan, a canal: Panama", " "]:
         print(is_palindrome2(s))
-    
-    
+
