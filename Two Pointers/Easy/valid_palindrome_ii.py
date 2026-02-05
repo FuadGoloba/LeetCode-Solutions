@@ -91,7 +91,7 @@ def valid_palindrome_optimal(s):
             return is_palindrome_range(left + 1, right) or is_palindrome_range(left, right - 1)
         
         left, right = left + 1, right - 1
-        return True
+    return True
     
 if __name__ == "__main__":
     test_cases = [
