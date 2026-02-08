@@ -21,18 +21,27 @@
     Input: nums = [0,0,0]
     Output: [[0,0,0]]
     Explanation: The only possible triplet sums up to 0.
-    
-    PREFERRED SOLUTION:
-        One intuition is to use the variation of the Two Sum-II solution for a sorted array using the Two Pointer technique. Although the Two Sum-II worked for 2 variables,
-        We will need to solve the 3Sum problem by sorting the array and fixing one of the variables thereby reducing the problem to a Two Sum II.
-        The target value for the Two Sum will be gotten as a remainder of the difference between the original target(i.e 0) and the first variable.
-        
-        Note: Edge cases: After the array is sorted, we will need to handle duplicates by checking and skipping values that have been previusly encountered.
 """
 
 def threeSum1(nums):
     '''
-        Sorting the array and using the 2sum solution with a hashset ; Time = O(n2), Memory = O(n)
+        Return all unique triplets in the array which gives the sum of zero using HashSet; 
+        
+        Intuition:
+        - Sort the input array to handle duplicates easily.
+        - Fix one element and use a hash set to find pairs that sum to the negative of the fixed element.
+        - This is similar to the Two-Sum problem, but we need to ensure that we are not using the same element twice and that we are not adding duplicate triplets to the result.   
+
+        Steps:
+        1. Sort the input array to handle duplicates easily.
+        2. Initialize a set to store unique triplets.
+        3. Iterate through the sorted array, fixing one element at a time.
+        4. For each fixed element, use a hash set to find pairs of numbers that sum to the negative of the fixed element.
+        5. If a valid pair is found, add the triplet (fixed element, pair elements) to the result set.
+        6. Convert the set of triplets to a list of lists and return it.    
+        
+        Time Complexity - O(n^2) : We have an outer loop that iterates through the array and an inner loop that also iterates through the array, resulting in O(n^2) time complexity.
+        Space Complexity - O(n) : In the worst case, we may store all unique triplets in the result set, which can take up to O(n) space. Additionally, the hash set used for finding pairs can also take up to O(n) space in the worst case.   
     '''
     nums.sort()  # Sort the input to avoid duplicates easily
     result = set()  # Use a set to store unique triplets
@@ -56,9 +65,26 @@ def threeSum1(nums):
     return [list(triplet) for triplet in result]  # Convert set of tuples to list of lists
 
 
-def threeSum2(nums):
+def threeSum2_optimal(nums):
     '''
-        Using Two Pointer with TwoSum II solution; Time = O(n2), memory = O(1)
+        Return all unique triplets in the array which gives the sum of zero using Two Pointers;
+        
+        Intuition:
+        - Sort the input array to handle duplicates easily.
+        - Fix one element and use two pointers to find pairs that sum to the negative of the fixed element.
+        - This is similar to the Two-Sum problem, but we need to ensure that we are not using the same element twice and that we are not adding duplicate triplets to the result.   
+        
+        Steps:
+        1. Sort the input array to handle duplicates easily.
+        2. Initialize a list to store unique triplets.
+        3. Iterate through the sorted array, fixing one element at a time.
+        4. For each fixed element, use two pointers (left and right) to find pairs of numbers that sum to the negative of the fixed element.
+        5. If a valid pair is found, add the triplet (fixed element, pair elements) to the result list. 
+        6. Move the left pointer forward and skip duplicates, and move the right pointer backward and skip duplicates to avoid adding duplicate triplets to the result.
+        7. Return the result list.      
+        
+        Time Complexity - O(n^2) : We have an outer loop that iterates through the array and an inner loop that uses two pointers to iterate through the array, resulting in O(n^2) time complexity.
+        Space Complexity - O(1) : We use a constant amount of extra space for the two pointers and the result list does not count towards extra space since it is used to store the output
     '''
 
     result = [] # Result list to store 3sum
@@ -86,16 +112,16 @@ def threeSum2(nums):
                 result.append([nums[i], nums[left], nums[right]])   
                 left += 1
                 
-                # We have to check that the element of the next left pointer is not same as the previous one (not duplicate)
+                # After we have found a triplet, we need to skip any duplicate values for the left pointer to avoid adding duplicate triplets to the result. 
                 while nums[left] == nums[left - 1] and left < right: # if duplcate value of left pointer, we skip and shift the left pointer forward
                     left += 1     
     return result
 
 
 def threeSum3(nums: list[int]) -> list[list[int]]:
-    """ Intuitive Approach by categorizing numbers into positives, negatives and zeros amd handling them separately
-        Time Complexity = O(n2), Space Complexity = O(n)
-
+    """ Return all unique triplets in the array which gives the sum of zero using HashSet with categorization of numbers;
+    
+        Intuition:  
         Categorize the numbers
         - Separate the numbers in the array into three lists: positives, negatives, and zeros.
         
@@ -103,6 +129,10 @@ def threeSum3(nums: list[int]) -> list[list[int]]:
         - If there are at least three zeros, include [0,0,0] in the result since their sum is zero.
         - For combinations involving one zero, find pairs of numbers (one positive and one negative) that sum to zero.
         
+        Handle one zero and a pair of positives or negatives:
+        - If there is at least one zero, for each negative number, check if its positive counterpart exists in the positive list. 
+        If it does, add the triplet (negative, 0, positive) to the result set.
+
         Handle Non-Zero Triplets:
         - Iterate through all unique pairs of numbers from the negative and positive lists.
         - Check if the complement of their sum (e.g., -(a + b)) exists in the appropriate list.
@@ -110,6 +140,18 @@ def threeSum3(nums: list[int]) -> list[list[int]]:
         
         Avoid Duplicates:
         - Use a set to store results, which avoids duplicate triplets naturally. 
+        
+        Steps:
+        1. Initialize a set to store unique triplets.
+        2. Separate the numbers in the array into three lists: positives, negatives, and zeros.
+        3. If there are at least three zeros, add the triplet (0, 0, 0) to the result set.
+        4. For each negative number, check if its positive counterpart exists in the positive list. If it does, add the triplet (negative, 0, positive) to the result set.
+        5. Iterate through all unique pairs of negative numbers and check if their complement (the negative of their sum) exists in the positive list. If it does, add the triplet (negative1, negative2, complement) to the result set.
+        6. Iterate through all unique pairs of positive numbers and check if their complement (the negative of their sum) exists in the negative list. If it does, add the triplet (positive1, positive2, complement) to the result set.
+        7. Convert the set of triplets to a list of lists and return it.        
+        
+        Time Complexity - O(n^2) : We have nested loops that iterate through the negative and positive lists to find pairs, resulting in O(n^2) time complexity.
+        Space Complexity - O(n) : We use additional space to store the categorized lists (posit and negatives) and the result set, which can take up to O(n) space in the worst case.  
 
     """
     result = set()
