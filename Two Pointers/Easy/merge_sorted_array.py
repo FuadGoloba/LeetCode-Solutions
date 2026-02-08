@@ -83,8 +83,8 @@ def merge_optimal_1(nums1: list[int], m: int, nums2: list[int], n:int) -> None:
                 - Otherwise, place nums2[n] at nums1[curr_idx] and move n and curr_idx backward.
         4. If there are remaining elements in nums2, place them in nums1.
         
-        Time Complexity - O(m + n) => O(n)
-        Space Complexity - O(1)     
+        Time Complexity - O(m + n) => O(n) : We iterate through both arrays once, resulting in O(m + n) time complexity, where m and n are the lengths of nums1 and nums2 respectively.
+        Space Complexity - O(1) : We use a constant amount of extra space for the pointers.
     """
     curr_idx = len(nums1)
 
@@ -118,8 +118,8 @@ def merge_optimal_2(nums1: list[int], m: int, nums2: list[int], n:int) -> None:
                 - If nums1[l] > nums2[r], place nums1[l] at nums1[idx] and move l and idx backward.
                 - Otherwise, place nums2[r] at nums1[idx] and move r and idx backward.
                 
-        Time Complexity - O(m + n) => O(n)
-        Space Complexity - O(1)
+        Time Complexity - O(m + n) => O(n) : We iterate through both arrays once, resulting in O(m + n) time complexity, where m and n are the lengths of nums1 and nums2 respectively.
+        Space Complexity - O(1) : We use a constant amount of extra space for the pointers.
     """
     l, r = m - 1, n - 1 # Start from the last valid elements of nums1 and nums2 respectively
     curr_idx = (m + n) - 1 # Start from the last index of nums1

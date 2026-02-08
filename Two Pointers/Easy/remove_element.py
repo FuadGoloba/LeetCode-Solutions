@@ -39,13 +39,13 @@ def removeElement(nums: list[int], val: int) -> int:
             - Increment the right pointer to continue traversing the array.
         3. Return the value of the left pointer, which represents the count of non-target elements in the array.
     
-    Time Complexity - O(n)
-    Space Complexity - O(1)
+    Time Complexity - O(n) : We traverse the array once with the right pointer, resulting in O(n) time complexity, where n is the length of the input array nums.
+    Space Complexity - O(1) : We use a constant amount of extra space for the left pointer.
     """
     left_ptr, right_ptr = 0, 0 # left tracks position where the next non-target element should be placed and right traverses the array
     nums_length = len(nums)
-    
-    # Traverse the array and overwrite target elements with nonj-target elements
+
+    # Traverse the array and overwrite target elements with non-target elements
     while right_ptr < nums_length:
         if nums[right_ptr] != val:
             nums[left_ptr] = nums[right_ptr]
@@ -69,9 +69,9 @@ def removeElement2(nums: list[int], val: int) -> int:
                 - Copy the element at the right pointer to the position indicated by the left pointer.
                 - Increment the left pointer to move to the next position for potential non-target elements.
         3. Return the value of the left pointer, which represents the count of non-target elements in the array.
-    
-    Time Complexity - O(n)
-    Space Complexity - O(1)
+
+    Time Complexity - O(n) : We traverse the array once with the right pointer, resulting in O(n) time complexity, where n is the length of the input array nums.
+    Space Complexity - O(1) : We use a constant amount of extra space for the left pointer.
     """
     left_ptr = 0
     nums_length = len(nums)
