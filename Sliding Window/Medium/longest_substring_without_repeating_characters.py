@@ -153,6 +153,24 @@ def lengthOfLongestSubstring4(s: str) -> int:
         max_len = max(max_len, (right - left) + 1)
 
     return max_len
+
+    # The code below is an alternative implementation of the same logic using a while loop instead of a for loop. It achieves the same result but is less concise than the for loop version.
+    
+    # left, right, max_len = 0, 0,0
+    # window = [0] * 128
+
+    # while right < len(s):
+    #     if window[ord(s[right])] > 0:
+    #         window[ord(s[left])] -= 1
+    #         left += 1
+        
+    #     else:
+    #         window[ord(s[right])] += 1
+    #         max_len = max(max_len, (right - left) + 1)
+    #         right += 1
+
+    # return max_len
+        
         
 if __name__ == '__main__':
     for s in ["abcabcbb", "bbbbb", "pwwkew"]:
