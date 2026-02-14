@@ -17,15 +17,29 @@
 
 def characterReplacement1(s, k):
     '''
-        Using Sliding window approach ; Time = O(n), Memory = O(n)
-        
-        SOLUTION:
+        Return the length of the longest substring containing the same letter you can get after performing the above operations.
+        Using Sliding window approach
+                
+        Intuition:
             The intuition is to use a Sliding Window technique and a hashmap. Here, a valid window is a substring within the bounds of k for which we can replace letters in the substring k times.
-            We create 2 pointers; l to represent the start of a window and r to traverse the string respectively. The hashmap stores the frequency of letters we have encountered so far.
+            We create 2 pointers; left to represent the start of a window and right to traverse the string respectively. The hashmap stores the frequency of letters we have encountered so far.
             A valid window or valid substring with k number of replacements would obey;  (window_len - max_freq of letter in window) <= k. The left side of the exprssion represents the number of replacements done so far, So if 0 <= k, we have done no replacements yet
             And if it finally equals k, that means we have maximised the replacements that can be done and that window will no longer be valid. We keep updating the result as the maximum length of any window we are currently traversing.
             Now we have to move the left pointer to the next character to start a new window while removing the old window start from the hashmap (i.e decrementing its freq) and try to check if this new window provides a result larger than the previous wundow length
             We do this till we get to the end of the string.
+            
+        Steps:
+            1. Create a frequency map count and initialize left = 0, freq_map = {}, and max_len = 0.
+            2. Move the right pointer right across the string:
+               - Update the frequency of s[right].
+               - Calculate the maximum frequency of any character in the current window max_freq.
+            3. If the window is invalid (window size - max_freq > k):
+               - Shrink the window from the left and adjust counts.
+            4. Update the max_len with the valid window size.
+            5. Return max_len at the end.
+
+        Time Complexity: O(n) - Each character is visited at most twice (once by right pointer and once by left pointer).
+        Space Complexity: O(n) - In the worst case, the hashmap can contain all unique characters in the string.
     '''
     freq_map = {} # dictionary to map every character to it's frequency/count
 
@@ -38,10 +52,11 @@ def characterReplacement1(s, k):
         
         # Condition for a valid window to allow at most k number of replacements; (right - left + 1) which is the length of current window
         # Note: the left side of the inequality gives us the no of characters we can replace to get a substring with repeated characters (the current count of less frequent characters). But this number must not exceed our allowable replacement number
-        while (right-left + 1) - max(freq_map.values()) > k: # Check that current window is valid enough to substitue/replace with any other char k times
+        max_freq = max(freq_map.values()) # We get the count of the maximum repeating letter in any window
+        while (right-left + 1) - max_freq > k: # Check that current window is valid enough to substitue/replace with any other char k times
             freq_map[s[left]] -= 1 # if not valid; we decrement the count of that character
-            left += 1 # and move the loeft pointer to start a new window (i.e shrink the window size)
-        
+            left += 1 # and move the left pointer to start a new window (i.e shrink the window size)
+
         # Update the longest repeating character valid for k number of replacements
         max_len = max(max_len, right - left + 1)
     return max_len
@@ -49,15 +64,30 @@ def characterReplacement1(s, k):
     
 def characterReplacement2(s, k):
     '''
-        Using Sliding window approach; Time = O(n), Memory = O(n)
+        Return the length of the longest substring containing the same letter you can get after performing the above operations.
+        Using Sliding window approach and a variable to keep track of the count of the most repeated letter in any window.        
         
-        SOLUTION:
+        Intuition:
             The intuition is to use a Sliding Window technique and a hashmap. Here, a valid window is a substring within the bounds of k for which we can replace letters in the substring k times.
-            We create 2 pointers; l to represent the start of a window and r to traverse the string respectively. The hashmap stores the frequency of letters we have encountered so far.
+            We create 2 pointers; left to represent the start of a window and right to traverse the string respectively. The hashmap stores the frequency of letters we have encountered so far.
             A valid window or valid substring with k number of replacements would obey;  (window_len - max_freq of letter in window) <= k. The left side of the exprssion represents the number of replacements done so far, So if 0 <= k, we have done no replacements yet
             And if it finally equals k, that means we have maximised the replacements that can be done and that window will no longer be valid. We keep updating the result as the maximum length of any window we are currently traversing.
             Now we have to move the left pointer to the next character to start a new window while removing the old window start from the hashmap (i.e decrementing its freq) and try to check if this new window provides a result larger than the previous wundow length
             We do this till we get to the end of the string.
+            
+        Steps:
+            1. Create a frequency map count and initialize left = 0, freq_map = {}, and max_len = 0, and max_repeat_letter_count = 0 to store the count of the most repeated letter in any window.
+            2. Move the right pointer right across the string:
+               - Update the frequency of s[right].
+               - Calculate the maximum frequency of any character in the current window max_repeat_letter_count.
+            3. If the window is invalid (window size - max_repeat_letter_count > k):
+               - Shrink the window from the left and adjust counts.
+            4. Update the max_len with the valid window size.
+            5. Return max_len at the end.       
+            
+        Time Complexity: O(n) - Each character is visited at most twice (once by right pointer and once by left pointer).
+        Space Complexity: O(n) - In the worst case, the hashmap can contain all unique characters in the string.
+
     '''
     freq_map = {} # dictionary to map every character to it's frequency/count
 
@@ -81,15 +111,29 @@ def characterReplacement2(s, k):
     
 def characterReplacement3(s: str, k: int) -> int:
     """
-        Using Sliding window approach; Time = O(n), Memory = O(n)
-
-        SOLUTION:
+        Return the length of the longest substring containing the same letter you can get after performing the above operations.
+        Using Sliding window approach and a variable to keep track of the count of the most repeated letter in any window.
+        
+        Intuition:
             The intuition is to use a Sliding Window technique and a hashmap. Here, a valid window is a substring within the bounds of k for which we can replace letters in the substring k times.
             We create 2 pointers; l to represent the start of a window and r to traverse the string respectively. The hashmap stores the frequency of letters we have encountered so far.
             A valid window or valid substring with k number of replacements would obey;  (window_len - max_freq of letter in window) <= k. The left side of the exprssion represents the number of replacements done so far, So if 0 <= k, we have done no replacements yet
             And if it finally equals k, that means we have maximised the replacements that can be done and that window will no longer be valid. We keep updating the result as the maximum length of any window we are currently traversing.
             Now we have to move the left pointer to the next character to start a new window while removing the old window start from the hashmap (i.e decrementing its freq) and try to check if this new window provides a result larger than the previous wundow length
             We do this till we get to the end of the string.
+            
+        Steps:
+            1. Create a frequency map count and initialize left = 0, freq_map = {}, and max_len = 0, and max_freq = 0 to store the count of the most repeated letter in any window.
+            2. Move the right pointer right across the string:
+                - Update the frequency of s[right].
+                - Calculate the maximum frequency of any character in the current window max_freq.
+            3. If the window is invalid (window size - max_freq > k):
+                - Shrink the window from the left and adjust counts.
+            4. Update the max_len with the valid window size.
+            5. Return max_len at the end.   
+            
+        Time Complexity: O(n) - Each character is visited at most twice (once by right pointer and once by left pointer).
+        Space Complexity: O(n) - In the worst case, the hashmap can contain all unique characters in the string.
     """
     freq_map = {}
     max_len = 0
@@ -102,7 +146,7 @@ def characterReplacement3(s: str, k: int) -> int:
         
         window_len = r - l + 1
         if (window_len - max_freq) <= k: # Check that we are within bounds of a valid substring/window to make k replacements
-            max_len = max(max_len, window_len) # Update the window lwngth
+            max_len = max(max_len, window_len) # Update the window length if it's the longest valid window so far
         else:
             freq_map[s[l]] -= 1 # Should we exceed the bound for replacements, we remove the left most character from the window in order to start a new window
             l += 1
