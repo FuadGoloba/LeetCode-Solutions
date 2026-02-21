@@ -138,5 +138,6 @@ def merge_optimal_2(nums1: list[int], m: int, nums2: list[int], n:int) -> None:
 
 if __name__ == "__main__":
     for nums1, m, nums2, n,  in [ ([1,2,3,0,0,0], 3, [2,5,6], 3), ([1], 1, [], 0), ([0], 0, [1], 1) ]:
-        merge_optimal_2(nums1, m, nums2, n)
+        merge_optimal_1(nums1, m, nums2, n) # [1,2,2,3,5,6], [1], [1]
+        assert merge_optimal_1(nums1, m, nums2, n) == merge_optimal_2(nums1, m, nums2, n)
         print(nums1)
