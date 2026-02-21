@@ -77,12 +77,12 @@ def findMissingRangesOptimal(nums: list[int], lower: int, upper: int) -> list[li
     1. If the array is empty, the entire range [lower, upper] is missing. Return it as a single range.
     2. Initialize two pointers, l and r, to the first and second elements of the array, respectively.
     2. Before first element: 
-        Check if there is a gap between lower and nums[0] or nums[l] (l is 0). If lower < nums[0], add [lower, nums[0] - 1] to the result.
+        Check if there is a gap between lower and nums[0]. If lower < nums[0], add [lower, nums[0] - 1] to the result.
     3. Between consecutive elements: 
         Iterate through consecutive pairs in the array. For each pair (nums[l], nums[r]):
             If the difference is greater than 1, there is a gap. Add [nums[l] + 1, nums[r] - 1] to the result.
     4. After last element:
-        Check if there is a gap between last element nums[l] (i.e nums[r - 1]) and upper. If upper > nums[l], add [nums[r - 1] + 1, upper] to the result.
+        Check if there is a gap between last element nums[n - 1] (i.e nums[r - 1]) and upper. If upper > nums[n - 1], add [nums[n - 1] + 1, upper] to the result.
     5. Return the list of missing ranges.
     
     Time complexity: O(n) where n is the length of the input array, since we are traversing the array once.
@@ -97,22 +97,20 @@ def findMissingRangesOptimal(nums: list[int], lower: int, upper: int) -> list[li
         return [[lower, upper]]
 
     # handling missing range before the first element (i.e between lower and nums[0])
-    if nums[l] > lower:
-        result.append([lower, nums[l] - 1])
-        l += 1
-        r += 1
-        
-    # handling missing ranges between consecutive elements    
+    if nums[0] > lower:
+        result.append([lower, nums[0] - 1])
+
+    # handling missing ranges between consecutive elements (i.e between nums[l] and nums[r])
     while r < n:
         if nums[r] - nums[l] > 1:
             result.append([nums[l] + 1, nums[r] - 1])
         l += 1
         r += 1
 
-    # handling missing range after last element (i.e between nums[l] or nums[r - 1] and upper)
-    if upper - nums[l] > 0:
-        result.append([nums[l] + 1, upper])
-        
+    # handling missing range after last element (i.e between nums[n - 1] or nums[r - 1] and upper)
+    if upper - nums[n - 1] > 0:
+        result.append([nums[n - 1] + 1, upper])
+
     return result
 
 def findMissingRangesOptimal2(nums: list[int], lower: int, upper: int) -> list[list[int]]:
@@ -154,7 +152,9 @@ if __name__ == "__main__":
     for func in [findMissingRanges, findMissingRangesOptimal, findMissingRangesOptimal2]:
         print(func([0,1,3,50,75], 0, 99)) # [[2,2],[4,49],[51,74],[76,99]]
         print(func([-1], -1, -1)) # []
+        print(func(nums=[-1], lower=-2, upper=-1)) # [[-2, -2]]
         assert func([0,1,3,50,75], 0, 99) == [[2,2],[4,49],[51,74],[76,99]]
         assert func([-1], -1, -1) == []
+        assert func(nums=[-1], lower=-2, upper=-1) == [[-2, -2]]
         
     
