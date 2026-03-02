@@ -1,18 +1,23 @@
-# REVERSE A LINKEDLIST
+""" REVERSE A LINKEDLIST
 
-# Given the head of a singly linked list, reverse the list, and return the reversed list. (Try it Iteratively and Recursively)
+    Given the head of a singly linked list, reverse the list, and return the reversed list. (Try it Iteratively and Recursively)
 
-# Example 1:
-# Input: head = [1,2,3,4,5]
-# Output: [5,4,3,2,1]
+    Example 1:
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
 
-# Example 2:
-# Input: head = [1,2]
-# Output: [2,1]
+    Example 2:
+    Input: head = [1,2]
+    Output: [2,1]
 
-# Example 3:
-# Input: head = []
-# Output: []
+    Example 3:
+    Input: head = []
+    Output: [] 
+
+    Constraints:
+    The number of nodes in the list is the range [0, 5000].
+-5000 <= Node.val <= 5000
+"""
 
 class Node:
     
@@ -28,9 +33,31 @@ class LinkedList:
         
     def reverseList1(self):
         '''
-            Solving Iteratively using Two pointers; Time = O(n), Memory = O(1)
+            Reversing a linked list iteratively
+            
+            Intuition:
+            1. Reversing a linked list iteratively is all about flipping pointers one step at a time.
+            We walk through the list from left to right, and for each node, we redirect its next pointer to point to the node behind it.
+
+            2. To avoid losing track of the rest of the list, we keep three pointers:
+                curr → the current node we are processing
+                prev → the node that should come after curr once reversed
+                temp → the original next node (so we don't break the chain)
+                By moving these pointers forward in each step, we gradually reverse the entire list.
+                When curr becomes null, the list is fully reversed, and prev points to the new head.
+                
+            Steps:
+            1. Initialize three pointers: prev as None, curr as head, and temp as None.
+            2. Traverse the linked list until curr becomes None:
+                a. Store the next node (curr.next) in temp to keep track of the remaining list.
+                b. Reverse the current node's pointer by setting curr.next to prev.
+                c. Move the prev pointer to the current node (prev = curr).
+                d. Move the curr pointer to the next node (curr = temp).
+            3. After the loop, prev will be pointing to the new head of the reversed list. Update the head of the linked list to prev and return it.
+
+        Time Complexity: O(n) - We traverse the linked list once.
+        Space Complexity: O(1) - We use a constant amount of space for the pointers
         '''
-        
         prev, curr = None, self.head # Initialise a previous and current pointer; While we travwrse the list, we want to point the pointer of a current node to a previous node thereby reversing it's link
                                      # And then updating the previous to go to the current and the current goes to the next and same thing as above applies
         
@@ -48,11 +75,25 @@ class LinkedList:
     
     def reverseList2(self, head):
         '''
-            Solving Recursivley by dividing the problem into sub problems and solving; Time = O(n), Memory = O(n)
-                1. Divide the llist into 2 parts; first node and rest of the llist
-                2. Recurse the rest of the llist
-                3. link the rest of the llist to first
-                4. Make head pointer point to NULL
+            Reversing a linked list recursively
+            
+            Intuition:
+            1. Reversing a linked list using recursion works by thinking in terms of "reverse the rest, then fix the pointer for the current node."
+            2. When we recursively go to the end of the list, that last node becomes the new head.
+            3. While the recursion unwinds, each node points backward to the one that called it.
+            4. Finally, we set the original head's next to null to finish the reversal.
+            This approach uses the call stack to naturally reverse the direction of the pointers.
+
+            Steps:
+                1. If the list is empty, return null.
+                2. Recursively call the function on head.next to reverse the rest of the list.
+                3. After the recursive call returns:
+                    Make head.next.next = head so the next node points back to the current node.
+                4. Set head.next = null to avoid cycles.
+                5. Return the new head returned by the deepest recursive call.
+                
+        Time Complexity: O(n) - We traverse the linked list once.
+        Space Complexity: O(n) - The recursion stack can go as deep as the length of the linked list.
         '''
         if not head:
             return None
@@ -108,5 +149,4 @@ if __name__ == '__main__':
         print('Reversed Linkedlist: ')
         ll.head = ll.reverseList2(ll.head)
         ll.print()
-
     
