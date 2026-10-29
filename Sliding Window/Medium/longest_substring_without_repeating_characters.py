@@ -170,9 +170,42 @@ def lengthOfLongestSubstring4(s: str) -> int:
     #         right += 1
 
     # return max_len
+    
+def lengthOfLongestSubstringOptimized(s: str) -> int:
+    """
+        Returns the length of the longest substring without repeating characters in a given string s. Optimized version using a hashmap to store the last seen index of characters.
+
+        Intuition:
+            Instead of using a fixed-size array, we use a hashmap to store the last seen index of each character.
+            This allows us to quickly jump the left pointer to the right of the last seen duplicate character.
+
+        Steps:
+            1. Initialize a hashmap (windowMap) and two pointers (left, right).
+            2. Move the right pointer, updating the hashmap with the last seen index of each character.
+            3. If a duplicate character is found within the current window, move the left pointer to the right of the last seen index of that character.
+            4. Track and update the maximum window size.
+            5. Return the maximum length found.
+
+        Time Complexity: O(n) - Each character is visited at most once.
+        Space Complexity: O(min(n, m)) - The hashmap stores at most m characters, where m is the character set size.
+    """
+    
+    window_map: dict[str, int] = {}
+    left = 0
+    max_len = 0
+    
+    for index, char in enumerate(s):
+        # If the character is already in the window and its last seen index is within the current window, move the left pointer to the right of that index.
+        if char in window_map and window_map[char] >= left:
+            left = window_map[char] + 1 # Move the left pointer to the right of the last seen duplicate character.
+        # Update the last seen index of the current character in the hashmap.
+        window_map[char] = index
+        max_len = max(max_len, (index - left) + 1)
+
+    return max_len
         
         
 if __name__ == '__main__':
     for s in ["abcabcbb", "bbbbb", "pwwkew"]:
         print(lengthOfLongestSubstring(s))
-        assert(lengthOfLongestSubstring(s) == lengthOfLongestSubstring2(s) == lengthOfLongestSubstring3(s) == lengthOfLongestSubstring4(s))
+        assert(lengthOfLongestSubstring(s) == lengthOfLongestSubstring2(s) == lengthOfLongestSubstring3(s) == lengthOfLongestSubstring4(s) == lengthOfLongestSubstringOptimized(s))
